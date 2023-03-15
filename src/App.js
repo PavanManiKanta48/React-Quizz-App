@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import Questions from "./Questions.json";
+import "./App.css";
+import Display from "./Display";
+import React, { useState } from "react";
+import Model from "./Model";
 
 function App() {
+  const [marks, setMarks] = useState([]);
+  let tempMarks = [];
+  const changeHandler = (value, index) => {
+    tempMarks = marks;
+    tempMarks[index] = value;
+    setMarks([...tempMarks]);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <center>
+        {Questions.map((question, index) => {
+          return (
+            <Display
+              question={question}
+              index={index}
+              changeHandler={changeHandler}
+            />
+          );
+        })}
+        <Model marks={marks} />
+      </center>
     </div>
   );
 }
